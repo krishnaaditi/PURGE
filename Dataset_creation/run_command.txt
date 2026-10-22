@@ -1,0 +1,73 @@
+
+How to RUn PURGE_D
+-----------------------------------------------------------------
+
+For both COCO and WaterBirds
+
+
+
+bash generate_purge_d.sh \
+  --coco-root /path/to/coco \
+  --output-root ./PURGE_D \
+  --train-per-class 100 \
+  --test-per-class 20
+  
+  
+  bash generate_purge_d_waterbirds.sh \
+  --waterbirds-root /path/to/waterbird_complete95_forest2water2 \
+  --segmentations-root /path/to/segmentations \
+  --output-root ./Waterbirds_PURGE_D \
+  --train-per-class -1 \
+  --val-per-class -1 \
+  --test-per-class -1
+  
+  How to RUn PURGE_D_inpainting
+  ---------------------------------------------------------------
+  
+  bash Dataset/generate_purge_d_in.sh \
+  --coco-root /path/to/coco/train2017 \
+  --ann-json /path/to/coco/annotations/instances_train2017.json \
+  --output-root ./outputs/PURGE_D_IP \
+  --target-pairs 8000 \
+  --quality-mode natural \
+  --max-inpaint-attempts 3
+  
+  
+  
+  
+ How to RUn PURGE_H
+ --------------------------------------------------------------
+  
+  
+  
+  bash Dataset/generate_purge_h.sh \
+  /path/to/coco/train2017 \
+  /path/to/coco/annotations/instances_train2017.json \
+  /path/to/llava-v1.6-mistral-7b-hf \
+  ./outputs/PURGE_H
+  
+  
+  
+  ## How to Run PURGE-M
+  -------------------------------------------------------------------------------------------------------------
+
+PURGE-M uses the MS COCO 2017 training images and instance annotations. By default, it processes all 80 COCO classes. The command below uses the paths and settings from our run; change the paths when running it on another machine.
+
+### Run PURGE-M directly
+
+```bash
+python Dataset/PURGE_M.py \
+  --coco_image_root "/home/hq1351@ad.wayne.edu/home/hal/datasets/train2017" \
+  --coco_ann_json "/home/hq1351@ad.wayne.edu/home/hal/datasets/annotations/instances_train2017.json" \
+  --output_root "/home/hq1351@ad.wayne.edu/home/hal/test/PURGE_M" \
+  --vlm_model_path "/home/hq1351@ad.wayne.edu/home/hal/models/llava-v1.6-mistral-7b-hf" \
+  --num_cues 9 \
+  --spur_k 100 \
+  --select_by hr \
+  --cue_detector_threshold 0.10 \
+  --detector_device cuda:0 \
+  --vlm_device cuda:0 \
+  --max_images_per_class 0 \
+  --max_materialized_per_combo 0 \
+  --link_mode hardlink \
+  --seed 42
