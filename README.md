@@ -2,7 +2,13 @@
 
 This repository contains the code and dataset resources for **PURGE**, a framework for diagnosing and mitigating object–background shortcuts in large vision-language models (LVLMs).
 
-![PURGE overview: structured dataset construction and partition-aware unlearning](image/PURGE_overview.png)
+![Overall PURGE framework](image/overall_diagram.png)
+
+*Figure 1: Overall PURGE framework, from structured dataset construction to partition-aware unlearning.*
+
+![PURGE dataset construction diagram](image/dataset_diagram.png)
+
+*Figure 2: PURGE-D, PURGE-H, and PURGE-M dataset construction strategies.*
 
 ## Paper
 
@@ -34,7 +40,7 @@ PURGE/
 ├── Dataset_creation/   # PURGE-D, PURGE-H, and PURGE-M data construction
 ├── Evaluation/         # Benchmark evaluation code
 ├── Training/           # Unlearning and model-training code
-├── image/              # Main overview figure used above
+├── image/              # Overall framework and dataset diagrams
 ├── README.md
 └── requirements.txt
 ```
