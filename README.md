@@ -79,7 +79,7 @@ bash Dataset_creation/generate_purge_d_im.sh \
   --coco-root "$COCO_IMAGE_ROOT" \
   --ann-json "$COCO_ANN_JSON" \
   --output-root "$PURGE_OUTPUT_ROOT/PURGE_D" \
-  --samples-per-class 100 \
+  --samples-per-class  \
   --quality-mode natural \
   --seed 
 ```
