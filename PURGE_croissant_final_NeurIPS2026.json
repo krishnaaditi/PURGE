@@ -1,0 +1,605 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "arrayShape": "cr:arrayShape",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "containedIn": "cr:containedIn",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataBiases": "cr:dataBiases",
+    "dataCollection": "cr:dataCollection",
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isArray": "cr:isArray",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "personalSensitiveInformation": "cr:personalSensitiveInformation",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "@type": "sc:Dataset",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "repo",
+      "name": "repo",
+      "description": "The Hugging Face git repository.",
+      "contentUrl": "https://huggingface.co/datasets/Krishnaaditi1/PURGE/tree/refs%2Fconvert%2Fparquet",
+      "encodingFormat": "git+https",
+      "sha256": "https://github.com/mlcommons/croissant/issues/80"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "parquet-files-for-config-PURGE-D",
+      "containedIn": {
+        "@id": "repo"
+      },
+      "encodingFormat": "application/x-parquet",
+      "includes": "PURGE-D/*/*.parquet"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "parquet-files-for-config-PURGE-H",
+      "containedIn": {
+        "@id": "repo"
+      },
+      "encodingFormat": "application/x-parquet",
+      "includes": "PURGE-H/*/*.parquet"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "parquet-files-for-config-PURGE-M",
+      "containedIn": {
+        "@id": "repo"
+      },
+      "encodingFormat": "application/x-parquet",
+      "includes": "PURGE-M/*/*.parquet"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "dataType": "cr:Split",
+      "key": {
+        "@id": "PURGE-D_splits/split_name"
+      },
+      "@id": "PURGE-D_splits",
+      "name": "PURGE-D_splits",
+      "description": "Splits for the PURGE-D config.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-D_splits/split_name",
+          "dataType": "sc:Text"
+        }
+      ],
+      "data": [
+        {
+          "PURGE-D_splits/split_name": "train"
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "PURGE-D",
+      "description": "Krishnaaditi1/PURGE - 'PURGE-D' subset\n\nAdditional information:\n- 5 skipped columns: variant, prediction, cue_object, cue_present, training_role",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-D/split",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-D"
+            },
+            "extract": {
+              "fileProperty": "fullpath"
+            },
+            "transform": {
+              "regex": "PURGE\\-D/(?:partial-)?(train)/.+parquet$"
+            }
+          },
+          "references": {
+            "field": {
+              "@id": "PURGE-D_splits/split_name"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-D/file_name",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-D"
+            },
+            "extract": {
+              "column": "file_name"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-D/purge_variant",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-D"
+            },
+            "extract": {
+              "column": "purge_variant"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-D/split",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-D"
+            },
+            "extract": {
+              "column": "split"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-D/target_object",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-D"
+            },
+            "extract": {
+              "column": "target_object"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-D/image_id",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-D"
+            },
+            "extract": {
+              "column": "image_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-D/original_file_name",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-D"
+            },
+            "extract": {
+              "column": "original_file_name"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "dataType": "cr:Split",
+      "key": {
+        "@id": "PURGE-H_splits/split_name"
+      },
+      "@id": "PURGE-H_splits",
+      "name": "PURGE-H_splits",
+      "description": "Splits for the PURGE-H config.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-H_splits/split_name",
+          "dataType": "sc:Text"
+        }
+      ],
+      "data": [
+        {
+          "PURGE-H_splits/split_name": "train"
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "PURGE-H",
+      "description": "Krishnaaditi1/PURGE - 'PURGE-H' subset\n\nAdditional information:\n- 3 skipped columns: cue_object, cue_present, training_role",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-H/split",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-H"
+            },
+            "extract": {
+              "fileProperty": "fullpath"
+            },
+            "transform": {
+              "regex": "PURGE\\-H/(?:partial-)?(train)/.+parquet$"
+            }
+          },
+          "references": {
+            "field": {
+              "@id": "PURGE-H_splits/split_name"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-H/file_name",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-H"
+            },
+            "extract": {
+              "column": "file_name"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-H/purge_variant",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-H"
+            },
+            "extract": {
+              "column": "purge_variant"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-H/split",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-H"
+            },
+            "extract": {
+              "column": "split"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-H/target_object",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-H"
+            },
+            "extract": {
+              "column": "target_object"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-H/image_id",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-H"
+            },
+            "extract": {
+              "column": "image_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-H/original_file_name",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-H"
+            },
+            "extract": {
+              "column": "original_file_name"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-H/variant",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-H"
+            },
+            "extract": {
+              "column": "variant"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-H/prediction",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-H"
+            },
+            "extract": {
+              "column": "prediction"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "dataType": "cr:Split",
+      "key": {
+        "@id": "PURGE-M_splits/split_name"
+      },
+      "@id": "PURGE-M_splits",
+      "name": "PURGE-M_splits",
+      "description": "Splits for the PURGE-M config.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-M_splits/split_name",
+          "dataType": "sc:Text"
+        }
+      ],
+      "data": [
+        {
+          "PURGE-M_splits/split_name": "train"
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "PURGE-M",
+      "description": "Krishnaaditi1/PURGE - 'PURGE-M' subset\n\nAdditional information:\n- 2 skipped columns: variant, prediction",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-M/split",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-M"
+            },
+            "extract": {
+              "fileProperty": "fullpath"
+            },
+            "transform": {
+              "regex": "PURGE\\-M/(?:partial-)?(train)/.+parquet$"
+            }
+          },
+          "references": {
+            "field": {
+              "@id": "PURGE-M_splits/split_name"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-M/file_name",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-M"
+            },
+            "extract": {
+              "column": "file_name"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-M/purge_variant",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-M"
+            },
+            "extract": {
+              "column": "purge_variant"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-M/split",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-M"
+            },
+            "extract": {
+              "column": "split"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-M/target_object",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-M"
+            },
+            "extract": {
+              "column": "target_object"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-M/image_id",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-M"
+            },
+            "extract": {
+              "column": "image_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-M/original_file_name",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-M"
+            },
+            "extract": {
+              "column": "original_file_name"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-M/cue_object",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-M"
+            },
+            "extract": {
+              "column": "cue_object"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-M/cue_present",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-M"
+            },
+            "extract": {
+              "column": "cue_present"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "PURGE-M/training_role",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "parquet-files-for-config-PURGE-M"
+            },
+            "extract": {
+              "column": "training_role"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "conformsTo": "http://mlcommons.org/croissant/1.1",
+  "name": "PURGE",
+  "description": "\n\t\n\t\t\n\t\n\t\n\t\tPURGE: Partition-Aware Unlearning for Removing Spurious-Correlation Generated Errors\n\t\n\nPURGE is a partitioning strategy applied to existing public datasets (MSCOCO 2017) that separates object-relevant evidence from spurious background cues in LVLMs. This repository hosts the resulting preprocessed retain/forget partitions for direct reuse.\nNeurIPS 2026 Evaluations & Datasets Track, Submission #2701.\n\n\t\n\t\t\n\t\n\t\n\t\tVariants\n\t\n\n\n\t\n\t\t\nVariant\nPartitioning basis\n\n\n\t\t\nPURGE-D\nPixel-level… See the full description on the dataset page: https://huggingface.co/datasets/Krishnaaditi1/PURGE.",
+  "alternateName": [
+    "Krishnaaditi1/PURGE",
+    "PURGE"
+  ],
+  "creator": [
+    {
+      "@type": "sc:Person",
+      "name": "Aditi Sarker"
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Nazreen Shah"
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Rafi Ibn Sultan"
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Rhongho Jang"
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Dongxiao Zhu"
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Prashant Khanduri"
+    }
+  ],
+  "keywords": [
+    "visual-question-answering",
+    "cc-by-4.0",
+    "10K - 100K",
+    "json",
+    "Image",
+    "Text",
+    "Datasets",
+    "pandas",
+    "Polars",
+    "Croissant",
+    "🇺🇸 Region: US"
+  ],
+  "license": "https://choosealicense.com/licenses/cc-by-4.0/",
+  "url": "https://huggingface.co/datasets/Krishnaaditi1/PURGE",
+  "citeAs": "@inproceedings{sarker2026purge, title={Partition-Aware Unlearning for Removing Spurious Correlations in Large Vision-Language Models}, author={Sarker, Aditi and Shah, Nazreen and Sultan, Rafi Ibn and Jang, Rhongho and Zhu, Dongxiao and Khanduri, Prashant}, booktitle={The Fortieth Annual Conference on Neural Information Processing Systems Evaluations and Datasets Track}, year={2026}, url={https://openreview.net/forum?id=Tt3sSoAeJd}}",
+  "rai:dataUseCases": "Intended for research on diagnosing and mitigating spurious object-background correlations in large vision-language models, including benchmarking hallucination-related metrics (CHAIR, POPE, AMBER, MMHal-Bench) and developing/evaluating unlearning-based mitigation methods (e.g. Gradient Ascent, KL-based, NPO objectives). Not intended for training production-grade object detectors or as a general-purpose replacement for MSCOCO.",
+  "rai:dataLimitations": "As stated in the paper's Limitations section: PURGE's partitions depend on the quality of masks, counterfactual images, cue proposals, and detector outputs, and effectiveness may decrease when object and background cues are highly entangled; constructing the partitions adds data-processing overhead relative to using MSCOCO directly. Additional scope limitations: the dataset is restricted to MSCOCO's 80 object categories and MSCOCO's image distribution (2014 collection, predominantly English-language contexts and captions); PURGE-H partitions are specific to the LVLM used to generate them (LLaVA-1.6-7B, Qwen3-VL-8B-Instruct, or Qwen3.5-9B) and are not guaranteed to transfer as retain/forget labels for a different model; the PURGE-D inpainting variant may itself introduce inpainting-model artifacts as a secondary distribution shift. Not recommended as a general-purpose replacement for MSCOCO or as a source of ground-truth object detection labels beyond what MSCOCO already provides.",
+  "rai:dataBiases": "Inherits any photographic, geographic, and object-category biases present in MSCOCO train2017 (e.g., over-representation of common Western/English-language photo-sharing contexts, since MSCOCO images originate from Flickr). Additionally, PURGE-H retain/forget labels inherit any biases of the specific LVLM used to generate them (LLaVA-1.6-7B, Qwen3-VL-8B-Instruct, or Qwen3.5-9B); PURGE-M retain/forget labels inherit any biases of the language model used for cue proposal and the open-vocabulary detector used for cue scoring (following the SpurLens methodology); and the PURGE-D inpainting variant inherits any biases of the GMCNN inpainting model (Wang et al., 2018). None of these component models' own bias characteristics are re-audited within this paper.",
+  "rai:dataSocialImpact": "Aims to reduce hallucination and spurious-correlation failures in LVLMs, which can improve reliability in downstream applications; misuse risk is considered low as the dataset only repackages existing public MSCOCO imagery for diagnostic/research purposes.",
+  "rai:personalSensitiveInformation": "MSCOCO images may contain incidental depictions of people in public scenes (as in the original MSCOCO dataset); no additional personal or sensitive information is collected, and no attempt is made to identify individuals. No PII, health, or demographic labels are added by PURGE.",
+  "rai:hasSyntheticData": true,
+  "prov:wasDerivedFrom": "https://cocodataset.org/#home",
+  "prov:wasGeneratedBy": "Preprocessing: object regions are identified from MSCOCO instance bounding boxes. PURGE-D masks these regions to isolate object vs. background pixels (default variant); a secondary variant additionally inpaints the masked regions using a generative multi-column CNN (GMCNN) inpainting model (Wang, Tao, Qi, Shen & Jia, 'Image inpainting via generative multi-column convolutional neural networks,' NeurIPS 2018). PURGE-H partitions images by comparing predictions from the evaluated LVLM itself (LLaVA-1.6-7B, Qwen3-VL-8B-Instruct, or Qwen3.5-9B, queried with a binary object-presence question) against MSCOCO ground truth, on both the original image and a counterfactual image with the target object removed. PURGE-M partitions images using MSCOCO ground-truth object presence together with a contextual cue score, computed by following the SpurLens methodology (Hosseini et al., arXiv:2503.08884, 2025) in which a language model proposes candidate co-occurring background cues and an open-vocabulary detector scores each image, thresholded to define cue presence/absence. Data collection: derived entirely from MSCOCO train2017 images (2014 collection period, MSCOCO's original geographic/source scope); no new images collected. Data annotation: no manual/crowdsourced annotation was performed for PURGE itself -- all retain/forget/partition labels are automatically derived from MSCOCO ground-truth annotations and/or model predictions as described above; see rai:dataAnnotationProtocol for the per-variant labeling logic.",
+  "rai:dataCollection": "All images are derived from MSCOCO train2017 (Lin et al., 2014). PURGE-D's default construction applies bounding-box masking to an image v with object mask M(v), producing complementary object-only and background-only views (v = v⊙M(v), v = v⊙(1−M(v))); a secondary inpainting-based variant additionally fills masked regions using a generative multi-column CNN inpainting model (Wang et al., 'Image inpainting via generative multi-column convolutional neural networks,' NeurIPS 2018) to produce more natural counterfactual images (reported separately in the paper's Appendix C). PURGE-H partitions images using each evaluated LVLM's own predictions (LLaVA-1.6-7B, Qwen3-VL-8B-Instruct, or Qwen3.5-9B) on a binary presence question ('Is there a [object] in the image?'), compared against MSCOCO ground-truth object presence, plus the same model's prediction on a counterfactual image with the target object removed. PURGE-M partitions images using MSCOCO ground-truth object presence together with a contextual cue score computed by following the SpurLens methodology (Hosseini et al., 'SpurLens: Automatic detection of spurious cues in multimodal LLMs,' arXiv:2503.08884, 2025): a language model proposes candidate co-occurring background cues, and an open-vocabulary detector computes a per-image cue score that is thresholded to determine cue presence/absence. No new images were photographed or scraped; no human subjects were involved beyond MSCOCO's original collection.",
+  "rai:dataCollectionType": "Derived/transformed from an existing public dataset (MSCOCO train2017) via automated image processing (bounding-box masking, and for one PURGE-D variant, generative inpainting) and automated model-based partitioning (LVLM prediction comparison for PURGE-H; ground-truth object presence plus detector-based cue scoring for PURGE-M). No new primary data (images) were collected.",
+  "rai:dataCollectionMissingData": "For PURGE-M, two of the four semantic partitions (C∩S, entangled object+cue evidence, and Cc∩Sc, trivial negatives) are excluded from the training retain/forget sets, though both are retained and released for evaluation. The paper's Limitations section notes overall partition quality depends on mask, counterfactual-image, cue-proposal, and detector quality, and may degrade when object and background cues are highly entangled.",
+  "rai:dataCollectionRawData": "MSCOCO train2017 images and instance annotations (https://cocodataset.org), redistributed here only as derived/masked crops under the same or a compatible license.",
+  "rai:dataAnnotationProtocol": "PURGE-D: retain/forget views are derived directly from MSCOCO instance bounding boxes via masking (no manual annotation); no additional retain/forget label is assigned beyond the object-present vs. background-only image pair itself. PURGE-H: for each image, ground-truth object presence o in {0,1} is compared against the evaluated LVLM's prediction y-hat on the original image and on a counterfactual (object-removed) image, yielding four cells (o=1,pred=1) and (o=0,pred=0) -> retain; (o=1,pred=0) and (o=0,pred=1) -> forget. PURGE-M: images are labeled by ground-truth object presence (set C vs. Cc) crossed with a thresholded contextual-cue-presence score (set S vs. Sc, via the SpurLens-style language-model cue proposal + open-vocabulary detector scoring described in rai:dataCollection); retain = C ∩ Sc, forget = Cc ∩ S, with C ∩ S and Cc ∩ Sc released for evaluation only.",
+  "rai:dataAnnotationPlatform": "Automated pipeline (Python scripts in Dataset_creation/); no crowdsourcing or manual annotation platform was used.",
+  "rai:dataAnnotationAnalysis": "All retain/forget/partition labels are deterministic functions of MSCOCO ground-truth annotations and/or automated model predictions (see rai:dataAnnotationProtocol); the paper does not describe a separate manual spot-check or human agreement study of these automatically-derived labels. Indirect validation is provided by downstream benchmark results (CHAIR, POPE, Causal-HalBench, MM-SpuBench, AMBER, MMHal-Bench) showing consistent improvements when models are unlearned on the resulting retain/forget partitions, and the paper's Limitations section explicitly notes that partition quality is bounded by the quality of the underlying masks, counterfactual images, cue proposals, and detector outputs.",
+  "rai:dataReleaseMaintenancePlan": "The dataset will be hosted at HuggingFace indefinitely; the authors will address correctness issues via versioned releases and monitor the repository's issue tracker."
+}
