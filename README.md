@@ -121,8 +121,8 @@ python Dataset_creation/PURGE_M.py \
   --link_mode hardlink \
   --seed 
 ```
+N.B: More cue can me used. change num_cues this  use more or less cue 
 
-Use distinct output directories for the variants. For other sampling, device, or class options, check the corresponding script's `--help` output.
 
 ## Experiments: unlearning and evaluation
 
