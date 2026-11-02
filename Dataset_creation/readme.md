@@ -102,15 +102,15 @@ bash Dataset_creation/RUN_Sh_files/generate_purge_d.sh \
 ```
 
 ### PURGE-D: Waterbirds
-
-```bash
-bash Dataset_creation/RUN_Sh_files/generate_purge_d_waterbirds.sh \
-  --waterbirds-root /path/to/waterbird_complete95_forest2water2 \
-  --segmentations-root /path/to/segmentations \
-  --output-root ./outputs/Waterbirds_PURGE_D \
-  --train-per-class -1 \
-  --val-per-class -1 \
-  --test-per-class -1
+```
+  python "/water_D.py" \
+  --data_root "/waterbird_complete95_forest2water2" \
+  --metadata_csv "/waterbirds/waterbird_complete95_forest2water2/metadata.csv" \
+  --output_root "/datasets/Waterbirds_PURGE_D" \
+  --device cuda: \
+  --score_threshold 0.30 \
+  --skip_no_detection
+  
 ```
 
 A value of `-1` follows the wrapper’s all-available-samples behavior. Check the wrapper help or source before changing sampling options.
@@ -141,6 +141,27 @@ bash Dataset_creation/RUN_Sh_files/generate_purge_h.sh \
   ./outputs/PURGE_H
 ```
 
+
+### PURGE-H: Waterbirds
+```
+  
+  python "/water_H.py" \
+  --data_root "/datasets/waterbirds/waterbird_complete95_forest2water2" \
+  --metadata_csv "/datasets/waterbirds/waterbird_complete95_forest2water2/metadata.csv" \
+  --output_root "/datasets/Waterbirds_PURGE_H" \
+  --model_path "/models/llava-v1.6-vicuna-7b-hf" \
+  --device cuda: \
+  --lama_device cpu \
+  --limit -- \
+  --overwrite
+  
+```
+
+
+
+
+
+
 ### PURGE-M
 
 PURGE-M uses COCO annotations, a local LLaVA checkpoint, and a cue detector. Update the paths for your machine. The example below keeps all settings visible and editable:
@@ -161,6 +182,24 @@ python Dataset_creation/PURGE_M.py \
   --max_materialized_per_combo 0 \
   --link_mode hardlink \
   --seed 42
+```
+
+
+
+### PURGE-M: Waterbirds
+```
+  python -u "/water_M.py" \
+  --data_root "/datasets/waterbirds/waterbird_complete95_forest2water2" \
+  --metadata_csv "/datasets/waterbirds/waterbird_complete95_forest2water2/metadata.csv" \
+  --output_root "/datasets/Waterbirds_PURGE_M" \
+  --vlm_model_path "/models/llava-v1.6-vicuna-7b-hf" \
+  --detector_device cuda: \
+  --vlm_device cuda:0 \
+  --cue_threshold 0.10 \
+  --spur_k --- \
+  --link_mode hardlink \
+  --overwrite \
+  
 ```
 
 When `--max_images_per_class` or `--max_materialized_per_combo` is `0`, the script uses its unlimited/default behavior for that setting. Cue generation may require an API key or a cue JSON file, depending on the options used. Store API keys in environment variables; do not put them in the command, README, or Git history.
