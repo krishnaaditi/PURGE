@@ -149,7 +149,8 @@ Training and evaluation scripts are organized in `Training/` and `Evaluation/`. 
 @inproceedings{
 anonymous2026partitionaware,
 title={Partition-Aware Unlearning for Removing Spurious Correlations in Large Vision-Language Models},
-author={Anonymous},
+author={Aditi Sarker, Nazreen Shah, Rafi Ibn Sultan, Rhongho Jang,
+Dongxiao Zhu, Prashant Khanduri},
 booktitle={The Fortieth Annual Conference on Neural Information Processing Systems Evaluations and Datasets Track},
 year={2026},
 url={https://openreview.net/forum?id=Tt3sSoAeJd}
