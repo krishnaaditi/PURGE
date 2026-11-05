@@ -1,25 +1,33 @@
-## PURGE-D Training with LLaVA and Qwen3-VL
-----------------------------------------------
+# PURGE Training
+
+This README describes how to prepare and train PURGE-D and PURGE-M with LLaVA and Qwen3-VL.
+
+## PURGE-D Training
+
+Expected dataset layout:
 
 ```text
 PURGE_D/
 └── images/
     ├── train/
-    │   ├── retain/<class>/*      # Object-only image; answer: yes
-    │   ├── forget/<class>/*      # Background-only image; answer: yes
-    │   └── forget_neg/<class>/*  # Object absent; answer: no
+    │   ├── retain/<class>/*      # Object-only images; answer: yes
+    │   ├── forget/<class>/*      # Background-only images; answer: yes
+    │   └── forget_neg/<class>/*  # Object-absent images; answer: no
     └── test/
-        └── forget_neg/*
+        └── forget_neg/
+```
 
+### LLaVA
 
-Run with 2 gpu : LLaVA
+This example runs NPO using two visible GPUs. Replace `--algo npo` with another algorithm supported by the training script if needed.
 
-CUDA_VISIBLE_DEVICES=0,1  python Train_PURGE_D.py" \
+```bash
+CUDA_VISIBLE_DEVICES=0,1 python -u Train/Train_PURGE_D.py \
   --model_family llava \
-  --model_path "/models/" \
-  --data_root "/datasets/PURDE_D/images/train" \
-  --output_dir "/outputs/" \
-  --algo  \[choose]
+  --model_path "/path/to/llava-v1.6-mistral-7b-hf" \
+  --data_root "/path/to/PURGE_D/images/train" \
+  --output_dir "outputs/PURGE_D/llava_npo" \
+  --algo npo \
   --device cuda:0 \
   --device_map llava_mistral_10_22 \
   --dtype bf16 \
@@ -38,18 +46,17 @@ CUDA_VISIBLE_DEVICES=0,1  python Train_PURGE_D.py" \
   --train_projector \
   --grad_checkpointing \
   --llava_single_crop
+```
 
+### Qwen3-VL
 
-
-
-Run with 2 gpu : Qwen
-
-CUDA_VISIBLE_DEVICES=0,1 python -u "/Train_PURGE_D.py" \
+```bash
+CUDA_VISIBLE_DEVICES=0,1 python -u Train/Train_PURGE_D.py \
   --model_family qwen3_vl \
-  --model_path "/models/" \
-  --data_root "/datasets/PURDE_D/images/train" \
-  --output_dir "/outputs/" \
-  --algo  \
+  --model_path "/path/to/Qwen3-VL-8B-Instruct" \
+  --data_root "/path/to/PURGE_D/images/train" \
+  --output_dir "outputs/PURGE_D/qwen3_vl_npo" \
+  --algo npo \
   --device_map balanced \
   --dtype bf16 \
   --epochs 5 \
@@ -66,16 +73,13 @@ CUDA_VISIBLE_DEVICES=0,1 python -u "/Train_PURGE_D.py" \
   --lora_dropout 0.05 \
   --train_projector \
   --grad_checkpointing
+```
 
+Set `--steps_per_epoch` to `0` to use the script’s full-dataset behavior for each epoch. Check the training script’s `--help` output for supported algorithm names and options.
 
+## PURGE-M Training
 
-
-
-
-## PURGE-M Training with LLaVA and Qwen3-VL
-------------------------------------------
-
-PURGE-M partitions images using target-object and cue presence:
+PURGE-M partitions images according to target-object presence and cue presence:
 
 ```text
 PURGE_M/
@@ -86,7 +90,19 @@ PURGE_M/
 └── yy/<target-class>/*   # Target present; cue present — evaluation
 ```
 
-The preparation script uses valid cue assignments to create the training and evaluation metadata:
+### Prepare the dataset
+
+Use `Train/Train_PURGE_M.py` to create the prepared dataset:
+
+```bash
+python -u Train/Train_PURGE_M.py \
+  --metadata_csv "/path/to/PURGE_M/metadata_with_cues.csv" \
+  --image_root "/path/to/PURGE_M" \
+  --output_root "/path/to/PURGE_M_prepared" \
+  --link_mode hardlink
+```
+
+The prepared dataset contains training and evaluation metadata, plus the corresponding image partitions:
 
 ```text
 PURGE_M_prepared/
@@ -100,31 +116,21 @@ PURGE_M_prepared/
         └── <partition>/<target-class>/*
 ```
 
-Use `Train/Train_PURGE_M.py` to prepare the dataset. Set the paths to your downloaded PURGE-M data:
+### Train PURGE-M
 
-```bash
-python Train/Train_PURGE_M.py \
-  --metadata_csv /path/to/PURGE_M/metadata_with_cues.csv \
-  --image_root /path/to/PURGE_M \
-  --output_root /path/to/PURGE_M_prepared \
-  --link_mode hardlink
-```
-
-Use the PURGE-M training launcher to run GA, KL, and NPO. Choose `MODEL` as `llava`, `qwen`, or `both`; choose `ALGO` as `ga`, `kl`, `npo`, or `all`. Set the epoch and step counts to suit your run.
+The launcher supports choosing a model (`llava`, `qwen`, or `both`) and an algorithm (`ga`, `kl`, `npo`, or `all`):
 
 ```bash
 MODEL=both \
 ALGO=all \
-LLAVA_MODEL_PATH=/path/to/llava-v1.6-mistral-7b-hf \
-QWEN_MODEL_PATH=/path/to/Qwen3-VL-8B-Instruct \
-PREPARED_ROOT=/path/to/PURGE_M_prepared \
-OUTPUT_ROOT=./outputs/PURGE_M \
-EPOCHS=<number_of_epochs> \
-STEPS_PER_EPOCH=<number_of_steps> \
+LLAVA_MODEL_PATH="/path/to/llava-v1.6-mistral-7b-hf" \
+QWEN_MODEL_PATH="/path/to/Qwen3-VL-8B-Instruct" \
+PREPARED_ROOT="/path/to/PURGE_M_prepared" \
+OUTPUT_ROOT="outputs/PURGE_M" \
+EPOCHS=5 \
+STEPS_PER_EPOCH=0 \
 CUDA_VISIBLE_DEVICES=0,1 \
 bash Train/run_purge_m_train_all.sh
 ```
 
-Replace the epoch and step placeholders with numbers before running. Use `STEPS_PER_EPOCH=0` to use all available training samples per epoch.
-
-To run a single model or algorithm, change `MODEL` or `ALGO`. For example, use `MODEL=qwen ALGO=npo` to run NPO on Qwen3-VL only.
+To run one model and one algorithm, change `MODEL` and `ALGO`. For example, use `MODEL=qwen ALGO=npo` to run NPO on Qwen3-VL only.
